@@ -3,11 +3,11 @@ App de saúde em *React Native* para o projeto final do processo seletivo da  [C
 ### Atualizando dependências:
 ```sh
 $ cd healthapp
-$ yarn
+$ npm i
 ```
 ### Rodando o app:
 ```sh
 $ cd healthapp
-$ yarn start
+$ npm start
 ```
 Projeto inicial criado com [Create React Native App](https://github.com/react-community/create-react-native-app).
