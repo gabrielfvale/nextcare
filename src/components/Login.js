@@ -14,11 +14,12 @@ import AuthButton from '../components/Button/AuthButton';
 export default class Login extends Component {
   render() {
     return (
+    <View style={styles.container}>
       <KeyboardAvoidingView
-        behavior='padding'
-        style={styles.container}>
+        style={{flex: 1}}
+        behavior='padding'>
         <View style={styles.logoSection}>
-        <Text style={{fontSize: 40, color: 'white'}}>healthapp</Text>
+        <Text style={{fontSize: 40, color: 'white'}}>HealthApp</Text>
         </View>
         <View style={styles.loginForm}>
         <TextInput 
@@ -32,6 +33,7 @@ export default class Login extends Component {
             style={styles.input} 
             underlineColorAndroid='transparent'
             returnKeyType='go'
+            secureTextEntry={true}
             placeholder='Senha'
             placeholderTextColor='rgba(0, 0, 0, 0.6)'/>
         <TouchableNativeFeedback
@@ -40,8 +42,10 @@ export default class Login extends Component {
                 <Text style={{color: 'white', fontSize: 16}}>LOGIN</Text>
             </View>
         </TouchableNativeFeedback>
-        <Text style={{color: 'white', padding: 16}}>OU</Text>
-        <AuthButton
+        </View>
+      </KeyboardAvoidingView>
+      <Text style={{color: 'white', padding: 16}}>OU</Text>
+      <AuthButton
             text='Entre com o Google'
             imageSrc={require('../images/google.png')}/>
         <AuthButton
@@ -49,8 +53,7 @@ export default class Login extends Component {
             textColor='white'
             backgroundColor='#3b5998'
             imageSrc={require('../images/facebook.png')}/>
-        </View>
-      </KeyboardAvoidingView>
+    </View>
     );
   }
 }
@@ -59,7 +62,8 @@ const styles = new StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: colors.primary,
-        padding: 24,
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     logoSection: {
         flex: 1,
@@ -67,7 +71,7 @@ const styles = new StyleSheet.create({
         alignItems: 'center',
     },
     loginForm: {
-        flex: 3,
+        flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
     },

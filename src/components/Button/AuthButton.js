@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {  StyleSheet, View, Text, TouchableNativeFeedback, Image} from 'react-native';
 import PropTypes from 'prop-types';
+import { dimensions } from '../../../styles/theme';
 
 export default class AuthButton extends Component {
   render() {
@@ -33,7 +34,7 @@ const styles = new StyleSheet.create({
         height: 34
     },
     btnWrapper: {
-        width: 360,
+        width: dimensions.fullWidth - 40,
         height: 60,
         alignItems: 'center',
         marginBottom: 16,
@@ -45,6 +46,6 @@ const styles = new StyleSheet.create({
         flex: 1,
         paddingRight: 34,
         textAlign: 'center',
-        fontSize: 16,
+        fontSize: 18,
     },
 });
