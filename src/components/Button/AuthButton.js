@@ -7,7 +7,7 @@ export default class AuthButton extends Component {
   render() {
     return (
         <TouchableNativeFeedback
-            onClick={this.props.onClick}
+            onPress={this.props.onPress}
             background={TouchableNativeFeedback.SelectableBackground()}>
         <View style={[styles.btnWrapper, {backgroundColor: this.props.backgroundColor}]}>
             <Image style={styles.image} source={this.props.imageSrc}/>
@@ -21,12 +21,12 @@ AuthButton.propTypes = {
     text: PropTypes.string,
     backgroundColor: PropTypes.string,
     textColor: PropTypes.string,
-    onClick: PropTypes.func
+    onPress: PropTypes.func
   };
 AuthButton.defaultProps = {
     backgroundColor: 'white',
     textColor: 'black',
-    onClick: function(){  }
+    onPress: () => {console.log('AuthButton pressionado')}
   };
 const styles = new StyleSheet.create({
     image: {
