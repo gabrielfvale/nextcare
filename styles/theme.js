@@ -2,7 +2,8 @@ import {StyleSheet, Dimensions} from 'react-native'
 
 export const dimensions = {
   fullHeight: Dimensions.get('window').height,
-  fullWidth: Dimensions.get('window').width
+  fullWidth: Dimensions.get('window').width,
+  icon_std: 24,
 }
   
 export const colors  = {
@@ -15,3 +16,4 @@ export const padding = {
     std: 16,
     sm: 8
 }
+

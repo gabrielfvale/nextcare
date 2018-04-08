@@ -15,11 +15,12 @@ export default class Login extends Component {
   render() {
     return (
     <View style={styles.container}>
+    <View style={{flex: 2}}>
       <KeyboardAvoidingView
         style={{flex: 1}}
         behavior='padding'>
         <View style={styles.logoSection}>
-        <Text style={{fontSize: 40, color: 'white'}}>HealthApp</Text>
+            <Text style={{fontSize: 40, color: 'white'}}>HealthApp</Text>
         </View>
         <View style={styles.loginForm}>
         <TextInput 
@@ -44,7 +45,9 @@ export default class Login extends Component {
         </TouchableNativeFeedback>
         </View>
       </KeyboardAvoidingView>
-      <Text style={{color: 'white', padding: 16}}>OU</Text>
+    </View>
+    <View style={{flex: 1, alignItems: 'center'}}>
+      <Text style={{color: 'white', paddingBottom: padding.std}}>OU</Text>
       <AuthButton
             text='Entre com o Google'
             imageSrc={require('../images/google.png')}/>
@@ -53,6 +56,7 @@ export default class Login extends Component {
             textColor='white'
             backgroundColor='#3b5998'
             imageSrc={require('../images/facebook.png')}/>
+    </View>
     </View>
     );
   }
@@ -79,13 +83,13 @@ const styles = new StyleSheet.create({
         marginBottom: 16,
         backgroundColor: 'rgba(255, 255, 255, 0.4)',
         width: dimensions.fullWidth - 40,
-        height: 60,
+        height: 56,
         paddingLeft: padding.std,
     },
     loginBtn: {
         backgroundColor: colors.secondary,
         width: dimensions.fullWidth - 40,
-        height: 60,
+        height: 56,
         alignItems: 'center',
         justifyContent: 'center',
     },
