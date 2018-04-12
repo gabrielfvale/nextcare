@@ -4,6 +4,7 @@ export const dimensions = {
   fullHeight: Dimensions.get('window').height,
   fullWidth: Dimensions.get('window').width,
   icon_std: 24,
+  btn_std: 56,
 }
   
 export const colors  = {

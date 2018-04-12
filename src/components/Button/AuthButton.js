@@ -6,12 +6,11 @@ import { dimensions, padding } from '../../../styles/theme';
 export default class AuthButton extends Component {
   render() {
     return (
-        <TouchableNativeFeedback
+    <TouchableNativeFeedback
             onPress={this.props.onPress}
-            background={TouchableNativeFeedback.SelectableBackground()}>
+            background={TouchableNativeFeedback.Ripple(this.props.backgroundColor, true)}>
         <View style={[styles.btnWrapper, {backgroundColor: this.props.backgroundColor}]}>
             <Image style={styles.image} source={this.props.imageSrc}/>
-            <Text style={[styles.btnText, {color: this.props.textColor}]}>{this.props.text}</Text>
         </View>
     </TouchableNativeFeedback>
     );
@@ -34,18 +33,11 @@ const styles = new StyleSheet.create({
         height: dimensions.icon_std
     },
     btnWrapper: {
-        width: dimensions.fullWidth - 40,
-        height: 56,
+        borderRadius: 56,
+        width: dimensions.btn_std,
+        height: dimensions.btn_std,
         alignItems: 'center',
-        marginBottom: padding.std,
-        paddingLeft: padding.std,
-        flexDirection: 'row',
-    },
-    btnText: {
-        color: 'black',
-        flex: 1,
-        paddingRight: 34,
-        textAlign: 'center',
-        fontSize: 18,
+        justifyContent: 'center',
+        margin: padding.sm,
     },
 });

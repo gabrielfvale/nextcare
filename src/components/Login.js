@@ -46,16 +46,15 @@ export default class Login extends Component {
         </View>
       </KeyboardAvoidingView>
     </View>
-    <View style={{flex: 1, alignItems: 'center'}}>
-      <Text style={{color: 'white', paddingBottom: padding.std}}>OU</Text>
-      <AuthButton
-            text='Entre com o Google'
+    <View style={{flex: 1, alignItems: 'center', flexDirection: 'row'}}>
+        <AuthButton
             imageSrc={require('../images/google.png')}/>
         <AuthButton
-            text='Entre com o Facebook'
-            textColor='white'
             backgroundColor='#3b5998'
             imageSrc={require('../images/facebook.png')}/>
+        <AuthButton
+            backgroundColor='#00aced'
+            imageSrc={require('../images/twitter.png')}/>
     </View>
     </View>
     );
