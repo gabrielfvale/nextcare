@@ -15,6 +15,7 @@ export const colors  = {
 
 export const padding = {
     std: 16,
+    bg: 32,
     sm: 8
 }
 
