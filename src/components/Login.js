@@ -16,7 +16,7 @@ export default class Login extends Component {
   render() {
     return (
         <View style={Style.container}>
-            <View style={{backgroundColor: colors.primary_dark, height: 24, width: dimensions.fullWidth}}>
+            <View style={{backgroundColor: colors.primaryDark, height: 24, width: dimensions.fullWidth}}>
             </View>
             <View style={styles.bg_section}>
                 <Text style={{color: 'white', fontSize: 40,}}>HealthApp</Text>

@@ -17,7 +17,7 @@ export default StyleSheet.create({
         paddingLeft: padding.std,
     },
     button: {
-        backgroundColor: colors.primary_dark,
+        backgroundColor: colors.primaryDark,
         width: dimensions.fullWidth - 40,
         height: 56,
         alignItems: 'center',
