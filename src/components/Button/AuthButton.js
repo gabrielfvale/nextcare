@@ -16,17 +16,15 @@ export default class AuthButton extends Component {
     );
   }
 }
+// Valores default para o AuthButton
 AuthButton.propTypes = {
-    text: PropTypes.string,
     backgroundColor: PropTypes.string,
-    textColor: PropTypes.string,
     onPress: PropTypes.func
-  };
+};
 AuthButton.defaultProps = {
     backgroundColor: 'white',
-    textColor: 'black',
     onPress: () => {console.log('AuthButton pressionado')}
-  };
+};
 const styles = new StyleSheet.create({
     image: {
         width: dimensions.icon_std,
