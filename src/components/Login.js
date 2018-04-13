@@ -10,12 +10,13 @@ import {
 } from 'react-native';
 import { dimensions, colors, padding } from '../../styles/theme'
 import AuthButton from '../components/Button/AuthButton';
+import Style from '../../styles/styles';
 
 export default class Login extends Component {
   render() {
     return (
-        <View style={styles.container}>
-            <View style={{backgroundColor: colors.secondary, height: 24, width: dimensions.fullWidth}}>
+        <View style={Style.container}>
+            <View style={{backgroundColor: colors.primary_dark, height: 24, width: dimensions.fullWidth}}>
             </View>
             <View style={styles.bg_section}>
                 <Text style={{color: 'white', fontSize: 40,}}>HealthApp</Text>
@@ -34,14 +35,14 @@ export default class Login extends Component {
                     imageSrc={require('../images/twitter.png')}/>
                 </View>
                 <TextInput 
-                    style={styles.input} 
+                    style={Style.input} 
                     underlineColorAndroid='transparent'
                     keyboardType='email-address'
                     returnKeyType='next'
                     placeholder='Email'
                     placeholderTextColor='rgba(0, 0, 0, 0.6)'/>
                 <TextInput 
-                    style={styles.input} 
+                    style={Style.input} 
                     underlineColorAndroid='transparent'
                     returnKeyType='go'
                     secureTextEntry={true}
@@ -49,7 +50,7 @@ export default class Login extends Component {
                     placeholderTextColor='rgba(0, 0, 0, 0.6)'/>
                 <TouchableNativeFeedback
                     background={TouchableNativeFeedback.SelectableBackground()}>
-                    <View style={styles.loginBtn}>
+                    <View style={Style.button}>
                         <Text style={{color: 'white', fontSize: 16}}>LOGIN</Text>
                     </View>
                 </TouchableNativeFeedback>
@@ -64,12 +65,6 @@ export default class Login extends Component {
   }
 }
 const styles = new StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: colors.primary,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
     sm_section: {
         flex: 2,
         justifyContent: 'center',
@@ -79,19 +74,5 @@ const styles = new StyleSheet.create({
         flex: 4,
         justifyContent: 'center',
         alignItems: 'center',
-    },
-    input: {
-        marginBottom: 16,
-        backgroundColor: 'rgba(255, 255, 255, 0.4)',
-        width: dimensions.fullWidth - 40,
-        height: 56,
-        paddingLeft: padding.std,
-    },
-    loginBtn: {
-        backgroundColor: colors.secondary,
-        width: dimensions.fullWidth - 40,
-        height: 56,
-        alignItems: 'center',
-        justifyContent: 'center',
     },
 });
