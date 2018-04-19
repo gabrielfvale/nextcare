@@ -7,6 +7,8 @@ import {
     TextInput, 
     TouchableNativeFeedback,
     TouchableOpacity,
+    Image,
+    StatusBar
 } from 'react-native';
 import { dimensions, colors, padding } from '../../styles/theme'
 import AuthButton from '../components/Button/AuthButton';
@@ -16,10 +18,9 @@ export default class Login extends Component {
   render() {
     return (
         <View style={Style.container}>
-            <View style={{backgroundColor: colors.primaryDark, height: 24, width: dimensions.fullWidth}}>
-            </View>
+            <StatusBar backgroundColor={colors.primaryDark} barStyle="light-content"/>
             <View style={styles.bg_section}>
-                <Text style={{color: 'white', fontSize: 40,}}>HealthApp</Text>
+                <Image tintColor='#424242' source={require('../images/logo.png')} style={{width: dimensions.fullWidth - 56, height: (dimensions.fullWidth - 56)/3}}/>
             </View>
             <KeyboardAvoidingView
                     style={{flex: 5}}
@@ -57,7 +58,7 @@ export default class Login extends Component {
             </KeyboardAvoidingView>
             <View style={styles.sm_section}>
                 <TouchableOpacity onPress={this._onPressButton}>
-                    <Text style={{color: 'white'}}>Não possui uma conta?</Text>
+                    <Text>Não possui uma conta?</Text>
                 </TouchableOpacity>
             </View>
         </View>

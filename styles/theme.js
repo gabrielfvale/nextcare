@@ -20,4 +20,3 @@ export const padding = {
     bg: 32,
     sm: 8
 }
-

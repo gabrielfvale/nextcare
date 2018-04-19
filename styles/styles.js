@@ -5,13 +5,13 @@ let iconSize = dimensions.icon_std;
 export default StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: colors.primary,
+        backgroundColor: 'white',
         justifyContent: 'center',
         alignItems: 'center',
     },
     input: {
         marginBottom: padding.std,
-        backgroundColor: 'rgba(255, 255, 255, 0.4)',
+        backgroundColor: 'rgba(0, 0, 0, 0.05)',
         width: dimensions.fullWidth - 40,
         height: 56,
         paddingLeft: padding.std,
