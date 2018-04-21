@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import {
     StyleSheet, 
     View, 
-    KeyboardAvoidingView, 
     Text, 
     TextInput, 
     TouchableNativeFeedback,
@@ -19,12 +18,10 @@ export default class Login extends Component {
     return (
         <View style={Style.container}>
             <StatusBar backgroundColor={colors.primaryDark} barStyle="light-content"/>
-            <View style={styles.bg_section}>
-                <Image tintColor='#424242' source={require('../images/logo.png')} style={{width: dimensions.fullWidth - 56, height: (dimensions.fullWidth - 56)/3}}/>
-            </View>
-            <KeyboardAvoidingView
-                    style={{flex: 5}}
-                    behavior='padding'>
+            <View style={{flex: 10}}>
+				<View style={styles.bg_section}>
+					<Image tintColor='#424242' source={require('../images/logo.png')} style={{width: dimensions.fullWidth - 56, height: (dimensions.fullWidth - 56)/3}}/>
+				</View>
                 <View style={{justifyContent: 'center', alignItems: 'center', flexDirection: 'row', marginBottom: padding.std}}>
                 <AuthButton
                     imageSrc={require('../images/google.png')}/>
@@ -55,7 +52,7 @@ export default class Login extends Component {
                         <Text style={{color: 'white', fontSize: 16}}>LOGIN</Text>
                     </View>
                 </TouchableNativeFeedback>
-            </KeyboardAvoidingView>
+            </View>
             <View style={styles.sm_section}>
                 <TouchableOpacity onPress={this._onPressButton}>
                     <Text>Não possui uma conta?</Text>
