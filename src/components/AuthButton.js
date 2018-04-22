@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {  StyleSheet, View, Text, TouchableNativeFeedback, Image} from 'react-native';
 import PropTypes from 'prop-types';
-import { dimensions, padding } from '../../../styles/theme';
+import { dimensions, padding } from '../../styles/theme';
 
 export default class AuthButton extends Component {
   render() {
