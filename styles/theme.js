@@ -10,8 +10,8 @@ export const dimensions = {
 export const colors  = {
   primary: '#009688',
   primaryDark: '#00796B',
-  secondary: '#607D8B',
-  secondaryDark: '#455A64',
+  secondary: '#34495e',
+  secondaryDark: '#2c3e50',
   accent: '#5DA6A7'
 }
 
