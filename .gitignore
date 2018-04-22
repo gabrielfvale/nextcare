@@ -19,6 +19,13 @@ android/build
 android/app/.settings
 android/app/build
 
+# Eclipse
+.project
+# JDT
+.classpath
+
+android/app/google-services.json
+
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
