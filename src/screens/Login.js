@@ -13,11 +13,31 @@ import { dimensions, colors, padding } from '../../styles/theme'
 import Style from '../../styles/styles';
 import AuthButton from '../components/AuthButton';
 import Logo from '../components/Logo';
+import firebase from 'react-native-firebase';
+
+
 
 export default class Login extends Component {
+  
+  state = {
+    email: '',
+    password: ''
+  }
+  
   static navigationOptions = {
     header: null
   }
+  
+ 
+  onLoginPress(){
+    if(this.state.email !== '' && this.state.password !== ''){
+      const {email, password} = this.state;
+      firebase.auth().signInAndRetrieveDataWithEmailAndPassword(email, password)
+       .then(() => { this.props.navigation.navigate('Diagnosis') })
+       .catch(() => {alert("Email ou senha incorretos!")})
+    }
+  }
+
   render() {
     return (
       <View style={Style.container}>
@@ -28,6 +48,7 @@ export default class Login extends Component {
           </View>
           <View style={{justifyContent: 'center', alignItems: 'center', flexDirection: 'row', marginBottom: padding.std}}>
           <AuthButton
+            onPress={()=>this.props.navigation.navigate('Diagnosis')}
             imageSrc={require('../images/google.png')}/>
           <AuthButton
             backgroundColor='#3b5998'
@@ -42,6 +63,8 @@ export default class Login extends Component {
             keyboardType='email-address'
             returnKeyType='next'
             placeholder='Email'
+            value={this.state.email}
+            onChangeText={email => this.setState({ email })}
             placeholderTextColor='rgba(0, 0, 0, 0.6)'/>
           <TextInput 
             style={Style.input} 
@@ -49,11 +72,14 @@ export default class Login extends Component {
             returnKeyType='go'
             secureTextEntry={true}
             placeholder='Senha'
+            value={this.state.password}
+            onChangeText={password => this.setState({ password })}
             placeholderTextColor='rgba(0, 0, 0, 0.6)'/>
           <TouchableNativeFeedback
+            onPress={() => this.onLoginPress()}
             background={TouchableNativeFeedback.SelectableBackground()}>
             <View style={Style.button}>
-              <Text style={{color: 'white', fontSize: 16}}>LOGIN</Text>
+              <Text style={{color: 'white', fontSize: 16}} >LOGIN</Text>
             </View>
           </TouchableNativeFeedback>
         </View>
@@ -66,6 +92,7 @@ export default class Login extends Component {
     );
   }
 }
+
 const styles = new StyleSheet.create({
   sm_section: {
     flex: 2,
