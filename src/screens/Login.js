@@ -7,7 +7,8 @@ import {
   TouchableNativeFeedback,
   TouchableOpacity,
   Image,
-  StatusBar
+  StatusBar,
+  ActivityIndicator
 } from 'react-native';
 import { dimensions, colors, padding } from '../../styles/theme'
 import Style from '../../styles/styles';
@@ -15,26 +16,31 @@ import AuthButton from '../components/AuthButton';
 import Logo from '../components/Logo';
 import firebase from 'react-native-firebase';
 
-
-
 export default class Login extends Component {
-  
-  state = {
-    email: '',
-    password: ''
+  constructor(props) {
+    super(props);
+    this.state = {
+      email: '',
+      password: '',
+      isLoading: false,
+    }
   }
   
   static navigationOptions = {
     header: null
   }
-  
  
-  onLoginPress(){
+  _onLoginPress(){
     if(this.state.email !== '' && this.state.password !== ''){
       const {email, password} = this.state;
       firebase.auth().signInAndRetrieveDataWithEmailAndPassword(email, password)
        .then(() => { this.props.navigation.navigate('Diagnosis') })
-       .catch(() => {alert("Email ou senha incorretos!")})
+       .catch(() => {
+         alert("Email ou senha incorretos!");
+         this.setState({isLoading: false});});
+      this.setState({isLoading: true});
+    } else {
+      alert('Campos vazios')
     }
   }
 
@@ -48,7 +54,6 @@ export default class Login extends Component {
           </View>
           <View style={{justifyContent: 'center', alignItems: 'center', flexDirection: 'row', marginBottom: padding.std}}>
           <AuthButton
-            onPress={()=>this.props.navigation.navigate('Diagnosis')}
             imageSrc={require('../images/google.png')}/>
           <AuthButton
             backgroundColor='#3b5998'
@@ -58,28 +63,38 @@ export default class Login extends Component {
             imageSrc={require('../images/twitter.png')}/>
           </View>
           <TextInput 
-            style={Style.input} 
+            style={Style.input}
             underlineColorAndroid='transparent'
+            autoCapitalize='none'
+            onSubmitEditing={() => { this.secondTextInput.focus(); }}
             keyboardType='email-address'
             returnKeyType='next'
             placeholder='Email'
             value={this.state.email}
             onChangeText={email => this.setState({ email })}
             placeholderTextColor='rgba(0, 0, 0, 0.6)'/>
-          <TextInput 
+          <TextInput
+            ref={(input) => { this.secondTextInput = input; }} 
             style={Style.input} 
             underlineColorAndroid='transparent'
-            returnKeyType='go'
+            autoCapitalize='none'
+            onSubmitEditing={() => this._onLoginPress()}
+            returnKeyType='send'
             secureTextEntry={true}
             placeholder='Senha'
             value={this.state.password}
             onChangeText={password => this.setState({ password })}
             placeholderTextColor='rgba(0, 0, 0, 0.6)'/>
           <TouchableNativeFeedback
-            onPress={() => this.onLoginPress()}
+            onPress={() => this._onLoginPress()}
             background={TouchableNativeFeedback.SelectableBackground()}>
             <View style={Style.button}>
-              <Text style={{color: 'white', fontSize: 16}} >LOGIN</Text>
+              <Text style={{color: 'white', fontSize: 16}}>{!this.state.isLoading ? 'LOGIN' : ' '}</Text>
+              <ActivityIndicator 
+                size='small' 
+                color='white' 
+                style={{position: 'absolute', opacity: this.state.isLoading ? 1.0 : 0.0}}
+              />
             </View>
           </TouchableNativeFeedback>
         </View>
