@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">NextCare</string>
+    <string name="facebook_app_id">426983427753996</string>
+    <string name="fb_login_protocol_scheme">fb426983427753996</string>
 </resources>

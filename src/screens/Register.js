@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import { dimensions, colors, padding } from '../../styles/theme'
 import Style from '../../styles/styles';
-import AuthButton from '../components/AuthButton';
+import SocialAuth from '../components/SocialAuth';
 import Logo from '../components/Logo';
 import firebase from 'react-native-firebase';
 
@@ -67,19 +67,12 @@ export default class Register extends Component {
     return (
       <View style={Style.container}>
       <StatusBar backgroundColor={colors.secondaryDark} barStyle="light-content"/>
-        <View style={{flex: 1.5, justifyContent: 'center'}}>
+        <View style={{flex: 1, justifyContent: 'center'}}>
           <Logo />
         </View>
         <View style={{flex: 2}}>
           <View style={{flexDirection: 'row', justifyContent: 'center', marginBottom: padding.std}}>
-          <AuthButton
-            imageSrc={require('../images/google.png')}/>
-          <AuthButton
-            backgroundColor='#3b5998'
-            imageSrc={require('../images/facebook.png')}/>
-          <AuthButton
-            backgroundColor='#00aced'
-            imageSrc={require('../images/twitter.png')}/>
+          <SocialAuth/>
           </View>
           <TextInput 
             style={Style.input} 
