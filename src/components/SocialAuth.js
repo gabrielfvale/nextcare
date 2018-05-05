@@ -20,22 +20,17 @@ const GoogleLogin = async () => {
     const credential = firebase.auth.GoogleAuthProvider.credential(data.idToken, data.accessToken)
     // Login com a credencial
     const currentUser = await firebase.auth().signInAndRetrieveDataWithCredential(credential);
-    console.info(JSON.stringify(currentUser.user.toJSON()));
   } catch (e) {
-    ToastAndroid.show(e, ToastAndroid.SHORT);
+    console.log(e.message)
   }
 }
 const FacebookLogin = async () => {
   try {
     const result = await LoginManager.logInWithReadPermissions(['public_profile', 'email']);
-    if (result.isCancelled) {
-      throw new Error('User cancelled request'); //TODO
-    }
-    console.log(`Login success with permissions: ${result.grantedPermissions.toString()}`);
     // Token de acesso
     const data = await AccessToken.getCurrentAccessToken();
     if (!data) {
-      throw new Error('Something went wrong obtaining the users access token'); // Handle this however fits the flow of your app
+      ToastAndroid.show('Houve um erro ao obter o token de acesso', ToastAndroid.SHORT);
     }
     // Cria uma credencial no firebase com o token
     const credential = firebase.auth.FacebookAuthProvider.credential(data.accessToken);
@@ -43,7 +38,7 @@ const FacebookLogin = async () => {
     const currentUser = await firebase.auth().signInAndRetrieveDataWithCredential(credential);
     console.info(JSON.stringify(currentUser.user.toJSON()))
   } catch (e) {
-    ToastAndroid.show(e, ToastAndroid.SHORT);
+    console.log(e.message)
   }
 }
 
