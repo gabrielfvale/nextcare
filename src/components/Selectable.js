@@ -55,7 +55,7 @@ export default class Selectable extends Component {
     return (
       <View style={{alignItems: 'center', marginVertical: 16}}>
         <TouchableWithoutFeedback 
-          onPress={() => this._onSelectablePress()}>
+          onPress={() => {this.props.select(); this._onSelectablePress()}}>
           <Animated.View style={[styles.btnWrapper, {backgroundColor: SelectableColor, borderWidth: this.state.border,}]}>
           <Animated.Image tintColor={iconTint} source={this.props.icon} style={styles.image}/>
           </Animated.View>
