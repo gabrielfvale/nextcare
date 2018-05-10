@@ -22,27 +22,29 @@ export default class Diagnosis extends Component {
 
   calculateResult(){
     //Estado inicial da classificacao
-    let result = this.state.userClassification;
-    for(let cont=0; cont < 19; cont++){
-      if(this.state.symptoms[cont].cat > result && this.state.symptoms[cont].isSelected == 'True'){
-        result = this.state.symptoms[cont].cat;
-      }
-    }
+    let result = 0;
     //Verifica se o estado nao foi alterado
     //Para eliminar risco de nao detectar que todos foram desmarcados
-    let empty=false; 
-    if(result == this.state.userClassification){
-      empty = true;
-      for(let cont2=0; cont2 < 19; cont2++){
+    let empty=true; 
+    for(let cont2=0; cont2 < 19; cont2++){
         //Verifica se ao menos um esta marcado
         if(this.state.symptoms[cont2].isSelected == 'True'){
           empty = false;
+        }
+    }
+    if(empty){
+      result = 0;
+    }
+    else{
+      for(let cont=0; cont < 19; cont++){
+        if(this.state.symptoms[cont].cat > result && this.state.symptoms[cont].isSelected == 'True'){
+          result = this.state.symptoms[cont].cat;
         }
       }
     }
     this.setState((previousState) => {
       //Se todos estao desmarcados, a classificacao e zero
-      empty == true? this.state.userClassification = 0: this.state.userClassification = result;
+      this.state.userClassification = result;
       alert(this.state.userClassification);
     })
   }
