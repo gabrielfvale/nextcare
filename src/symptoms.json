@@ -17,91 +17,91 @@
     {
       "id" : "3",
       "name" : "Falta de Ar Grave",
-      "image" : "heart.png",
+      "image" : "arritmia.png",
       "cat" : 4,
       "isSelected": "False"
     },
     {
       "id" : "4",
       "name" : "Convulsao",
-      "image" : "heart.png",
+      "image" : "arritmia.png",
       "cat" : 4,
       "isSelected": "False"
     },
     {
       "id" : "5",
       "name" : "Hemorragia Grave",
-      "image" : "heart.png",
+      "image" : "arritmia.png",
       "cat" : 4,
       "isSelected": "False"
     },
     {
       "id" : "6",
       "name" : "Danos da Coluna",
-      "image" : "heart.png",
+      "image" : "arritmia.png",
       "cat" : 4,
       "isSelected": "False"
     },
     {
       "id" : "7",
       "name" : "Dor Severa",
-      "image" : "heart.png",
+      "image" : "arritmia.png",
       "cat" : 3,
       "isSelected": "False"
     },
     {
       "id" : "8",
       "name" : "Hemorragia Leve",
-      "image" : "heart.png",
+      "image" : "arritmia.png",
       "cat" : 3,
       "isSelected": "False"
     },
     {
       "id" : "9",
       "name" : "Arritmia",
-      "image" : "heart.png",
+      "image" : "arritmia.png",
       "cat" : 3,
       "isSelected": "False"
     },
     {
       "id" : "10",
       "name" : "Dor Toracica",
-      "image" : "heart.png",
+      "image" : "arritmia.png",
       "cat" : 2,
       "isSelected": "False"
     },
     {
       "id" : "11",
       "name" : "Desmaio",
-      "image" : "heart.png",
+      "image" : "arritmia.png",
       "cat" : 2,
       "isSelected": "False"
     },
     {
       "id" : "12",
       "name" : "Vomito Intenso",
-      "image" : "heart.png",
+      "image" : "arritmia.png",
       "cat" : 2,
       "isSelected": "False"
     },
     {
       "id" : "13",
       "name" : "Febre",
-      "image" : "heart.png",
+      "image" : "febre.png",
       "cat" : 1,
       "isSelected": "False"
     },
     {
       "id" : "14",
       "name" : "Nausea e Vomitos",
-      "image" : "heart.png",
+      "image" : "arritmia.png",
       "cat" : 1,
       "isSelected": "False"
     },
     {
       "id" : "15",
-      "name" : "Asma sem Crise",
-      "image" : "heart.png",
+      "name" : "Enxaqueca",
+      "image" : "enxaqueca.png",
       "cat" : 1,
       "isSelected": "False"
     }
@@ -109,28 +109,28 @@
     {
       "id" : "16",
       "name" : "Queixas Cronicas",
-      "image" : "heart.png",
+      "image" : "arritmia.png",
       "cat" : 0,
       "isSelected": "False"
     },
     {
       "id" : "17",
       "name" : "Dor de Garganta",
-      "image" : "heart.png",
+      "image" : "arritmia.png",
       "cat" : 0,
       "isSelected": "False"
     },
     {
       "id" : "18",
       "name" : "Troca de Curativos",
-      "image" : "heart.png",
+      "image" : "troca_curativos.png",
       "cat" : 0,
       "isSelected": "False"
     },
     {
       "id" : "19",
       "name" : "Preferencial",
-      "image" : "heart.png",
+      "image" : "arritmia.png",
       "cat" : 1,
       "isSelected": "False"
     }
