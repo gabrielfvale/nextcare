@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import {  StyleSheet, View, Text, TouchableNativeFeedback, StatusBar, ViewPagerAndroid, Switch } from 'react-native';
+import {  StyleSheet, View, Text, TouchableNativeFeedback, StatusBar, ViewPagerAndroid, Switch, AsyncStorage, Button } from 'react-native';
 import { colors, dimensions, padding } from '../../styles/theme';
 import Style from '../../styles/styles';
 import Selectable from '../components/Selectable';
 import Symptoms from '../symptoms.json';
+import {isSignedIn, addResult, removeResult} from './auth.js';
 
 export default class Diagnosis extends Component {
 
@@ -11,8 +12,15 @@ export default class Diagnosis extends Component {
     super(props);
     this.state = {
       symptoms: Symptoms.data,
-      userClassification: 0
+      userClassification: 0,
+      hasResult: false,
+      hasCheckedResult: false
     }
+  }
+
+  componentDidMount(){
+    isSignedIn()
+    .then(res => this.setState({ hasResult: res, hasCheckedResult: true}))
   }
 
   selectSymptom(id){
@@ -45,15 +53,35 @@ export default class Diagnosis extends Component {
     this.setState((previousState) => {
       //Se todos estao desmarcados, a classificacao e zero
       this.state.userClassification = result;
-      alert(this.state.userClassification);
-    })
+    });
+    const CLASSIFICATION_KEY = "user-final-classification";
+    const CLASSIFICATION_VALUE = toString(this.state.userClassification);
+    AsyncStorage.setItem(CLASSIFICATION_KEY, CLASSIFICATION_VALUE);
   }
 
+  displayResult(){
+    AsyncStorage.getItem('UserFinalClassification');
+  }
+  
   render() {
-    let iconPath = '../images/diagnosis/';
     
-    return (
-      <ViewPagerAndroid style={Style.container} initialPage={0} ref={viewPager => { this.viewPager = viewPager}}>
+    const {hasCheckedResult, hasResult} = this.state;
+
+    if(hasCheckedResult == false){
+      return null;
+    }
+    if(hasResult){
+      //TEST ONLY
+      AsyncStorage.removeItem('auth-demo-key');
+      //TEST ONLY
+      return(
+        <Text>Direto pro mapa</Text>
+      );
+    }
+    else {
+      let iconPath = '../images/diagnosis/';
+      return(
+        <ViewPagerAndroid style={Style.container} initialPage={0} ref={viewPager => { this.viewPager = viewPager}}>
         
         <View style={Style.container} key="0">
         <StatusBar backgroundColor={colors.primaryDark}/>
@@ -95,12 +123,12 @@ export default class Diagnosis extends Component {
             <View style={{width: dimensions.fullWidth, height: 40, backgroundColor: colors.primary,flexDirection: 'row', justifyContent:'space-between'}}>
               <TouchableNativeFeedback>
                 <View style={{height: 40, width: 96, backgroundColor: colors.primaryDark, justifyContent: 'center', alignItems: 'center'}}>
-                  <Text style={{color: 'white'}} onPress={() => this.viewPager.setPage(0)}>ANTERIOR</Text>
+                  <Text style={{color: 'white'}} onPress={() => this.removeResult()}>ANTERIOR</Text>
                 </View>
               </TouchableNativeFeedback>
               <TouchableNativeFeedback>
                 <View style={{height: 40, width: 96, backgroundColor: colors.primaryDark, justifyContent: 'center', alignItems: 'center'}}>
-                  <Text style={{color: 'white'}} onPress={() => this.calculateResult()}>FINALIZAR</Text>
+                  <Text style={{color: 'white'}} onPress={() => {this.calculateResult();addResult();}}>FINALIZAR</Text>
                 </View>
               </TouchableNativeFeedback>
             
@@ -110,5 +138,6 @@ export default class Diagnosis extends Component {
         
       </ViewPagerAndroid>
     );
+    }
   }
 }
