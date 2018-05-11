@@ -1,10 +1,35 @@
 import React, { Component } from 'react';
-import {  StyleSheet, View, Text, TouchableNativeFeedback, StatusBar, ViewPagerAndroid, Switch, AsyncStorage, Button } from 'react-native';
+import {  
+  StyleSheet, 
+  View, 
+  Text, 
+  TouchableNativeFeedback, 
+  StatusBar, 
+  ViewPagerAndroid, 
+  Switch, 
+  AsyncStorage, 
+  Button,
+  PermissionsAndroid 
+} from 'react-native';
 import { colors, dimensions, padding } from '../../styles/theme';
 import Style from '../../styles/styles';
 import Selectable from '../components/Selectable';
 import Symptoms from '../symptoms.json';
-import {doneResult, addResult, removeResult} from './assync.js';
+import {doneResult, addResult, removeResult} from '../async';
+import LoadingScreen from '../components/LoadingScreen';
+async function requestLocationPermission() {
+  try {
+    const granted = await PermissionsAndroid.request(
+      PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION)
+    if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+      ToastAndroid.show('Location permission granted', ToastAndroid.SHORT)
+    } else {
+      ToastAndroid.show('Location permission denied', ToastAndroid.SHORT)
+    }
+  } catch (err) {
+    console.warn(err)
+  }
+}
 
 export default class Diagnosis extends Component {
 
@@ -19,6 +44,7 @@ export default class Diagnosis extends Component {
   }
 
   componentDidMount(){
+    requestLocationPermission();
     doneResult()
     .then(res => this.setState({ hasResult: res, hasCheckedResult: true}))
   }
@@ -30,11 +56,11 @@ export default class Diagnosis extends Component {
 
   calculateResult(){
     //Estado inicial da classificacao
-    let result = 0;
+    var result = 0;
     //Verifica se o estado nao foi alterado
     //Para eliminar risco de nao detectar que todos foram desmarcados
-    let empty=true; 
-    for(let cont2=0; cont2 < 19; cont2++){
+    var empty = true; 
+    for(var cont2=0; cont2 < 19; cont2++){
         //Verifica se ao menos um esta marcado
         if(this.state.symptoms[cont2].isSelected == 'True'){
           empty = false;
@@ -43,47 +69,33 @@ export default class Diagnosis extends Component {
     if(empty){
       result = 0;
     }
-    else{
-      for(let cont=0; cont < 19; cont++){
+      for(var cont=0; cont < 19; cont++){
         if(this.state.symptoms[cont].cat > result && this.state.symptoms[cont].isSelected == 'True'){
           result = this.state.symptoms[cont].cat;
         }
       }
-    }
-    this.setState((previousState) => {
-      //Se todos estao desmarcados, a classificacao e zero
-      this.state.userClassification = result;
-    });
-    const CLASSIFICATION_KEY = "user-final-classification";
-    const CLASSIFICATION_VALUE = toString(this.state.userClassification);
-    AsyncStorage.setItem(CLASSIFICATION_KEY, CLASSIFICATION_VALUE);
+      const USER_STATUS = 'user-status';
+      AsyncStorage.setItem(USER_STATUS, result.toString())
+      this.props.navigation.navigate('Result', { result })
   }
-
-  displayResult(){
-    AsyncStorage.getItem('UserFinalClassification');
-  }
-  
   render() {
-    
     const {hasCheckedResult, hasResult} = this.state;
 
-    if(hasCheckedResult == false){
-      return null;
+    if(!hasCheckedResult){
+      return <LoadingScreen/>;
     }
     if(hasResult){
       //TEST ONLY
       AsyncStorage.removeItem('has-done-result');
       //TEST ONLY
-      return(
-        <Text>Direto pro mapa</Text>
-      );
+      return <Text>result done</Text>;
     }
     else {
       let iconPath = '../images/diagnosis/';
       return(
         <ViewPagerAndroid style={Style.container} initialPage={0} ref={viewPager => { this.viewPager = viewPager}}>
         
-        <View style={Style.container} key="0">
+        <View style={Style.container} key='0'>
         <StatusBar backgroundColor={colors.primaryDark}/>
           <View style={{flex: 1, justifyContent: 'center'}}>
           <View style={{flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center'}}>
@@ -110,7 +122,7 @@ export default class Diagnosis extends Component {
             </View>
           </View>
         </View>
-        <View style={Style.container} key="1">
+        <View style={Style.container} key='1'>
         <StatusBar backgroundColor={colors.primaryDark}/>
           <View style={{flex: 1, justifyContent: 'center'}}>
           <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
@@ -123,12 +135,12 @@ export default class Diagnosis extends Component {
             <View style={{width: dimensions.fullWidth, height: 40, backgroundColor: colors.primary,flexDirection: 'row', justifyContent:'space-between'}}>
               <TouchableNativeFeedback>
                 <View style={{height: 40, width: 96, backgroundColor: colors.primaryDark, justifyContent: 'center', alignItems: 'center'}}>
-                  <Text style={{color: 'white'}} onPress={() => this.removeResult()}>ANTERIOR</Text>
+                  <Text style={{color: 'white'}} onPress={() => this.viewPager.setPage(0)}>ANTERIOR</Text>
                 </View>
               </TouchableNativeFeedback>
               <TouchableNativeFeedback>
                 <View style={{height: 40, width: 96, backgroundColor: colors.primaryDark, justifyContent: 'center', alignItems: 'center'}}>
-                  <Text style={{color: 'white'}} onPress={() => {this.calculateResult();addResult();}}>FINALIZAR</Text>
+                  <Text style={{color: 'white'}} onPress={() => {this.calculateResult()}}>FINALIZAR</Text>
                 </View>
               </TouchableNativeFeedback>
             

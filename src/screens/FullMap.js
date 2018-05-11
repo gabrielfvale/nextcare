@@ -45,18 +45,16 @@ export default class FullMap extends Component {
         markers: responseJson.results
       }, function(){
       });
-      alert(JSON.stringify(responseJson));
     })
     .catch((error) =>{
       console.error(error);
     });
   }
   componentDidMount() {
-    requestLocationPermission()
     PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION)
     .then((granted) => {
       if(granted) {
-        ToastAndroid.show('Location granted', ToastAndroid.SHORT);
+        console.log('Location granted');
         Geolocation.getCurrentPosition(
           (position) => {
             this.setState({

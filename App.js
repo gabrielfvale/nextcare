@@ -5,6 +5,9 @@ import Login from './src/screens/Login';
 import Register from './src/screens/Register';
 import Diagnosis from './src/screens/Diagnosis';
 import firebase from 'react-native-firebase';
+import { createRootNavigator } from './src/router';
+import { doneResult } from './src/async';
+import LoadingScreen from './src/components/LoadingScreen';
 
 const Nav = StackNavigator({
   Login: {screen: Login},
@@ -21,12 +24,17 @@ export default class App extends React.Component {
     this.unsubscriber = null;
     this.state = {
       user: null,
+      checkResult: false,
+      doneResult: false
     };
   }
-  componentWillMount() {
+  componentDidMount() {
     this.unsubscriber = firebase.auth().onAuthStateChanged((user) => {
       this.setState({ user });
     });
+    doneResult()
+    .then(res => this.setState({ doneResult: res, checkResult: true }))
+    .catch(err => alert('Ocorreu um erro'));
   }
 
   componentWillUnmount() {
@@ -36,15 +44,12 @@ export default class App extends React.Component {
   }
 
   render() {
-
-    if (!this.state.user) {
-      return <Nav />;
+    const { user, checkResult, doneResult } = this.state;
+    if (!checkResult) {
+      return <LoadingScreen/>;
     }
-    else {
-      return (
-        <Diagnosis/>
-      );
-    }
+    const Layout = createRootNavigator(user, doneResult);
+    return <Layout />;
   }
 }
 
