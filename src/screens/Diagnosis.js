@@ -4,7 +4,7 @@ import { colors, dimensions, padding } from '../../styles/theme';
 import Style from '../../styles/styles';
 import Selectable from '../components/Selectable';
 import Symptoms from '../symptoms.json';
-import {isSignedIn, addResult, removeResult} from './auth.js';
+import {doneResult, addResult, removeResult} from './assync.js';
 
 export default class Diagnosis extends Component {
 
@@ -19,7 +19,7 @@ export default class Diagnosis extends Component {
   }
 
   componentDidMount(){
-    isSignedIn()
+    doneResult()
     .then(res => this.setState({ hasResult: res, hasCheckedResult: true}))
   }
 
@@ -72,7 +72,7 @@ export default class Diagnosis extends Component {
     }
     if(hasResult){
       //TEST ONLY
-      AsyncStorage.removeItem('auth-demo-key');
+      AsyncStorage.removeItem('has-done-result');
       //TEST ONLY
       return(
         <Text>Direto pro mapa</Text>
