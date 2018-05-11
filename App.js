@@ -42,7 +42,7 @@ export default class App extends React.Component {
     }
     else {
       return (
-        <Diagnosis userEmail={this.state.user.email}/>
+        <Diagnosis/>
       );
     }
   }

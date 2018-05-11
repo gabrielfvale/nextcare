@@ -3,6 +3,8 @@ package com.nextcare;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.airbnb.android.react.maps.MapsPackage;
+import com.agontuk.RNFusedLocation.RNFusedLocationPackage;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookSdk;
 import com.facebook.reactnative.androidsdk.FBSDKPackage;
@@ -38,7 +40,9 @@ public class MainApplication extends Application implements ReactApplication {
           new RNFirebasePackage(),
           new RNFirebaseAuthPackage(),
           new RNGoogleSigninPackage(),
-          new FBSDKPackage(mCallbackManager)
+          new FBSDKPackage(mCallbackManager),
+          new MapsPackage(),
+          new RNFusedLocationPackage()
       );
     }
 

@@ -100,7 +100,7 @@ android {
     defaultConfig {
         applicationId "com.nextcare"
         minSdkVersion 16
-        targetSdkVersion 22
+        targetSdkVersion 27
         versionCode 1
         versionName "1.0"
         ndk {
@@ -137,6 +137,13 @@ android {
 }
 
 dependencies {
+    implementation(project(':react-native-maps')){
+      exclude group: 'com.google.android.gms', module: 'play-services-base'
+      exclude group: 'com.google.android.gms', module: 'play-services-maps'
+    }
+    implementation(project(':react-native-geolocation-service')) {
+        exclude group: 'com.google.android.gms', module: 'play-services-location'
+    }
     implementation(project(':react-native-fbsdk'))
     implementation(project(":react-native-google-signin")){         
         exclude group: "com.google.android.gms" // very important
@@ -150,6 +157,8 @@ dependencies {
     implementation("com.facebook.react:react-native:+")  // From node_modules
     // Dependências do Firebase
     implementation "com.google.android.gms:play-services-base:12.0.1"
+    implementation "com.google.android.gms:play-services-maps:12.0.1"
+    implementation 'com.google.android.gms:play-services-location:12.0.1'
     implementation "com.google.firebase:firebase-core:12.0.1"
     implementation "com.google.firebase:firebase-auth:12.0.1"
 }
