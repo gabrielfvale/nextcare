@@ -7,12 +7,14 @@ import {
   Image,
   Easing, 
   StatusBar,
-  AsyncStorage 
+  AsyncStorage,
+  TouchableWithoutFeedback 
 } from 'react-native';
 import { colors, padding, dimensions } from '../../styles/theme';
 import Style from '../../styles/styles';
 import Selectable from '../components/Selectable';
 import FullMap from '../screens/FullMap';
+import firebase from 'react-native-firebase';
 
 const faceColors = ['#3F51B5', '#4CAF50', '#FFEB3B', '#FF9800', '#F44336']
 const RESULT_TEXT = [
@@ -91,12 +93,18 @@ export default class Result extends Component {
           <Animated.Image tintColor={faceColors[3]} source={require(facePath + 'frown.png')} style={SELECTED == 3 ? selectedStyle : normalStyle}/>
           <Animated.Image tintColor={faceColors[4]} source={require(facePath + 'frown.png')} style={SELECTED == 4 ? selectedStyle : normalStyle}/>
         </Animated.View>
-        <Animated.View style={{opacity: this.animations.showComponents, bottom: 0, alignItems: 'center',}}>
+        <Animated.View style={{opacity: this.animations.showComponents, bottom: 0, alignItems: 'center'}}>
           <Text style={{fontSize: 20, fontWeight: 'bold', marginBottom: padding.sm}}>{this.text}</Text>
           <Text style={{marginBottom: padding.sm}}>Veja hospitais próximos de você: </Text>
-          <View style={{width: dimensions.fullWidth, height: dimensions.fullHeight/3}}>
+          <View style={{width: dimensions.fullWidth, height: dimensions.fullHeight/4}}>
             <FullMap/>
           </View>
+        </Animated.View>
+        <Animated.View style={{opacity: this.animations.showComponents, position: 'absolute', top: 16, right: 16}}>
+          <TouchableWithoutFeedback
+            onPress={() => firebase.auth().signOut()}>
+            <Image style={{width: 32, height: 32}} tintColor='#ccc' source={require('../images/logout.png')}/>
+          </TouchableWithoutFeedback>
         </Animated.View>
       </View>
     );

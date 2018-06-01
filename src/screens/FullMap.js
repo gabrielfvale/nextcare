@@ -97,10 +97,6 @@ export default class FullMap extends Component {
         />
         ))}       
         </MapView>
-        <View style={{width: dimensions.fullWidth, height: 64, backgroundColor: 'white', alignItems: 'center', justifyContent: 'center'}}>
-          <Text style={{fontWeight: 'bold'}}>{this.state.selectedMarker[0]}</Text>
-          <Text>{this.state.selectedMarker[1]}</Text>
-        </View>
       </View>
     );
   } else {
@@ -117,7 +113,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'flex-end',
     alignItems: 'center',
-},
+  },
   map: {
     ...StyleSheet.absoluteFillObject,
   },

@@ -17,6 +17,7 @@ import Selectable from '../components/Selectable';
 import Symptoms from '../symptoms.json';
 import {doneResult, addResult, removeResult} from '../async';
 import LoadingScreen from '../components/LoadingScreen';
+
 async function requestLocationPermission() {
   try {
     const granted = await PermissionsAndroid.request(
@@ -30,7 +31,7 @@ async function requestLocationPermission() {
     console.warn(err)
   }
 }
-
+var symptoms = [...Symptoms.data];
 export default class Diagnosis extends Component {
 
   constructor(props) {
@@ -46,108 +47,77 @@ export default class Diagnosis extends Component {
   componentDidMount(){
     requestLocationPermission();
     doneResult()
-    .then(res => this.setState({ hasResult: res, hasCheckedResult: true}))
+    .then(res => this.setState({ hasResult: res, hasCheckedResult: true}));
   }
 
-  selectSymptom(id){
-    //Altera o status de isSelected de um sintoma em Symptoms
-    this.state.symptoms[id-1].isSelected == 'False'? this.state.symptoms[id-1].isSelected = 'True': this.state.symptoms[id-1].isSelected = 'False';
+  selectSymptom(id) {
+    symptoms[id].isSelected = !symptoms[id].isSelected;
   }
 
-  calculateResult(){
+  calculateResult() {
     //Estado inicial da classificacao
     var result = 0;
     //Verifica se o estado nao foi alterado
     //Para eliminar risco de nao detectar que todos foram desmarcados
     var empty = true; 
-    for(var cont2=0; cont2 < 19; cont2++){
-        //Verifica se ao menos um esta marcado
-        if(this.state.symptoms[cont2].isSelected == 'True'){
-          empty = false;
-        }
+    for(var cont=0; cont < 19; cont++){
+      //Verifica se ao menos um esta marcado
+      if(symptoms[cont].isSelected) {
+        empty = false;
+      }
     }
     if(empty){
       result = 0;
     }
-      for(var cont=0; cont < 19; cont++){
-        if(this.state.symptoms[cont].cat > result && this.state.symptoms[cont].isSelected == 'True'){
-          result = this.state.symptoms[cont].cat;
-        }
+    for(var cont=0; cont < 19; cont++){
+      if(symptoms[cont].cat > result && symptoms[cont].isSelected){
+        result = symptoms[cont].cat;
       }
-      const USER_STATUS = 'user-status';
-      AsyncStorage.setItem(USER_STATUS, result.toString())
-      this.props.navigation.navigate('Result', { result })
+    }
+    this.props.navigation.navigate('Result', { result })
   }
   render() {
-    const {hasCheckedResult, hasResult} = this.state;
-
-    if(!hasCheckedResult){
+    if(!this.state.hasCheckedResult){
       return <LoadingScreen/>;
-    }
-    if(hasResult){
-      //TEST ONLY
-      AsyncStorage.removeItem('has-done-result');
-      //TEST ONLY
-      return <Text>result done</Text>;
     }
     else {
       let iconPath = '../images/diagnosis/';
       return(
-        <ViewPagerAndroid style={Style.container} initialPage={0} ref={viewPager => { this.viewPager = viewPager}}>
-        
+      <ViewPagerAndroid 
+        style={Style.container} 
+        initialPage={0} 
+        ref={viewPager => { this.viewPager = viewPager}}>
         <View style={Style.container} key='0'>
-        <StatusBar backgroundColor={colors.primaryDark}/>
-          <View style={{flex: 1, justifyContent: 'center'}}>
-          <View style={{flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center'}}>
-            <Text >Idoso(a), Gestante ou Deficiente: </Text>
-            <Switch
-              onValueChange={()=>{
-                this.state.symptoms[18].isSelected == 'False'? this.state.symptoms[18].isSelected = 'True':this.state.symptoms[18].isSelected = 'False';}
-              }
-            />
-          </View>
-          <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
-            { this.state.symptoms.slice(0, 9).map((item) =>{
-              return <Selectable key={item.id} select={()=>{this.selectSymptom(item.id)}} title={item.name} icon={{uri: 'asset:/' + item.image}}/>
-            })}
-          </View>
-          </View>
-          <View style={{justifyContent: 'flex-end'}}>
-            <View style={{width: dimensions.fullWidth, height: 40, backgroundColor: colors.primary, alignItems: 'flex-end'}}>
-              <TouchableNativeFeedback>
-                <View style={{height: 40, width: 96, backgroundColor: colors.primaryDark, justifyContent: 'center', alignItems: 'center'}}>
-                  <Text style={{color: 'white'}} onPress={() => this.viewPager.setPage(1)}>PROXIMO</Text>
-                </View>
-              </TouchableNativeFeedback>
+          <StatusBar backgroundColor={colors.primaryDark}/>
+          <View style={Style.container}>
+            <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
+            {this.state.symptoms.slice(0, 9).map((item, index) =>{
+              return <Selectable 
+                key={index+9} 
+                onPress={()=> this.selectSymptom(index)} 
+                title={item.name} 
+                icon={{uri: 'asset:/' + item.image}}/>
+              })}
             </View>
           </View>
         </View>
         <View style={Style.container} key='1'>
-        <StatusBar backgroundColor={colors.primaryDark}/>
-          <View style={{flex: 1, justifyContent: 'center'}}>
-          <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
-            { this.state.symptoms.slice(9 , 18).map((item) =>{
-              return <Selectable key={item.id} select={()=>{this.selectSymptom(item.id)}} title={item.name} icon={{uri: 'asset:/' + item.image} }/>
-            })}
-          </View>
-          </View>
-          <View style={{justifyContent: 'flex-end'}}>
-            <View style={{width: dimensions.fullWidth, height: 40, backgroundColor: colors.primary,flexDirection: 'row', justifyContent:'space-between'}}>
-              <TouchableNativeFeedback>
-                <View style={{height: 40, width: 96, backgroundColor: colors.primaryDark, justifyContent: 'center', alignItems: 'center'}}>
-                  <Text style={{color: 'white'}} onPress={() => this.viewPager.setPage(0)}>ANTERIOR</Text>
-                </View>
-              </TouchableNativeFeedback>
-              <TouchableNativeFeedback>
-                <View style={{height: 40, width: 96, backgroundColor: colors.primaryDark, justifyContent: 'center', alignItems: 'center'}}>
-                  <Text style={{color: 'white'}} onPress={() => {this.calculateResult()}}>FINALIZAR</Text>
-                </View>
-              </TouchableNativeFeedback>
-            
+          <StatusBar backgroundColor={colors.primaryDark}/>
+          <View style={Style.container}>
+            <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
+              {this.state.symptoms.slice(9, 18).map((item, index) =>{
+                return <Selectable 
+                  key={index+9} 
+                  onPress={()=> this.selectSymptom(index+9)} 
+                  title={item.name} 
+                  icon={{uri: 'asset:/' + item.image}}/>
+              })}
+            </View>
+            <View style={{position: 'absolute', bottom: 16,}}>
+              <Button title='finalizar' onPress={() => this.calculateResult()}/>
             </View>
           </View>
-        </View>
-        
+        </View>         
       </ViewPagerAndroid>
     );
     }

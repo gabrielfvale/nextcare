@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import {  
   StyleSheet, 
   View, 
@@ -42,29 +42,28 @@ const FacebookLogin = async () => {
   }
 }
 
-export default class SocialAuth extends Component {
-  render() {
-    let iconPath = '../images/';
-    return (
-    <View style={{flexDirection: 'row', justifyContent: 'center',}}>
-      <TouchableNativeFeedback
-        onPress={() => GoogleLogin()}
-        background={TouchableNativeFeedback.Ripple('gray', true)}>
-        <View style={[styles.btnWrapper, {backgroundColor: 'white'}]}>
-          <Image style={styles.image} source={require(iconPath + 'google.png')}/>
-        </View>
-      </TouchableNativeFeedback>
-      <TouchableNativeFeedback
-        onPress={() => FacebookLogin()}
-        background={TouchableNativeFeedback.Ripple('#3b5998', true)}>
-        <View style={[styles.btnWrapper, {backgroundColor: '#3b5998'}]}>
-          <Image style={styles.image} source={require(iconPath + 'facebook.png')}/>
-        </View>
-      </TouchableNativeFeedback>
-    </View>
-    );
-  }
+const SocialAuth = () => {
+  let iconPath = '../images/';
+  return (
+  <View style={{flexDirection: 'row', justifyContent: 'center',}}>
+    <TouchableNativeFeedback
+      onPress={() => GoogleLogin()}
+      background={TouchableNativeFeedback.Ripple('gray', true)}>
+      <View style={[styles.btnWrapper, {backgroundColor: 'white'}]}>
+        <Image style={styles.image} source={require(iconPath + 'google.png')}/>
+      </View>
+    </TouchableNativeFeedback>
+    <TouchableNativeFeedback
+      onPress={() => FacebookLogin()}
+      background={TouchableNativeFeedback.Ripple('#3b5998', true)}>
+      <View style={[styles.btnWrapper, {backgroundColor: '#3b5998'}]}>
+        <Image style={styles.image} source={require(iconPath + 'facebook.png')}/>
+      </View>
+    </TouchableNativeFeedback>
+  </View>
+  );
 }
+
 const styles = new StyleSheet.create({
   image: {
     width: dimensions.icon_std,
@@ -80,3 +79,5 @@ const styles = new StyleSheet.create({
     elevation: 1,
     },
 });
+
+export default SocialAuth;
